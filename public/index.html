@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Repository</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Knowledge Repo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#" class="dropdown-trigger" data-target="userDropdown">Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Dropdown Structure -->
+    <ul id="userDropdown" class="dropdown-content">
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Logout</a></li>
+    </ul>
+
+    <!-- Search and Add Section -->
+    <div class="container">
+        <div class="row">
+            <div class="input-field col s10">
+                <input id="searchInput" type="text" placeholder="Search">
+                <label for="searchInput">Search</label>
+            </div>
+            <div class="col s2">
+                <a class="waves-effect waves-light btn modal-trigger" href="#editorModal">
+                    <i class="material-icons left">add</i>Add
+                </a>
+            </div>
+        </div>
+
+        <!-- Directory Tree -->
+        <div id="directoryTree" class="section"></div>
+    </div>
+
+    <!-- Code Window Modal -->
+    <div id="codeWindow" class="modal">
+        <div class="modal-content">
+            <h4>Code Snippet</h4>
+            <div id="markdownContent" class="markdown-body"></div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+    <!-- Rich Text Editor Modal -->
+    <div id="editorModal" class="modal">
+        <div class="modal-content">
+            <h4>Markdown Editor</h4>
+            <textarea id="editor"></textarea>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Save</a>
+        </div>
+    </div>
+
+    <!-- Materialize JS and other libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/3.0.4/marked.min.js"></script> <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script> <!-- Highlight.js for syntax highlighting -->
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script> <!-- SimpleMDE for rich text editor -->
+    <script src="script.js"></script>
+    <script>
+        // Initialize Materialize components
+        document.addEventListener('DOMContentLoaded', function() {
+            M.AutoInit();
+            const simplemde = new SimpleMDE({ element: document.getElementById("editor") });
+        });
+    </script>
+</body>
+</html>
