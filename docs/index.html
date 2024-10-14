@@ -8,8 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <!-- FontAwesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Prism JS for code highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -61,29 +61,10 @@
         </div>
     </div>
 
-    <!-- Rich Text Editor Modal -->
-    <div id="editorModal" class="modal">
-        <div class="modal-content">
-            <h4>Markdown Editor</h4>
-            <textarea id="editor"></textarea>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Save</a>
-        </div>
-    </div>
-
     <!-- Materialize JS and other libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/3.0.4/marked.min.js"></script> <!-- Marked.js for Markdown rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script> <!-- Highlight.js for syntax highlighting -->
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script> <!-- SimpleMDE for rich text editor -->
     <script src="script.js"></script>
-    <script>
-        // Initialize Materialize components
-        document.addEventListener('DOMContentLoaded', function() {
-            M.AutoInit();
-            const simplemde = new SimpleMDE({ element: document.getElementById("editor") });
-        });
-    </script>
 </body>
 </html>
