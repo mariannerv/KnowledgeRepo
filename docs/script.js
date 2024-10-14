@@ -1,7 +1,7 @@
 // Function to fetch JSON data from the provided URL
 async function loadData() {
   try {
-    const response = await fetch('https://gist.githubusercontent.com/blacksmithop/8383cbd32b25f6c90f4f2f82178b0b81/raw/82b94d7bee39b2087e0212d08a92847ca55002d7/knowledge_base_data.json');
+    const response = await fetch('https://gist.githubusercontent.com/blacksmithop/8383cbd32b25f6c90f4f2f82178b0b81/raw/7b7d8b7d7a2eeb7f1ed20b0bee4d027f6d1d105a/knowledge_base_data.json');
     const data = await response.json();
     displayData(data.DevOpsTools);
   } catch (error) {
