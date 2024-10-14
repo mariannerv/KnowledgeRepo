@@ -1,7 +1,8 @@
-// Function to fetch JSON data from the provided URL
+// Function to fetch JSON data from the root directory
 async function loadData() {
   try {
-    const response = await fetch('https://gist.githubusercontent.com/blacksmithop/8383cbd32b25f6c90f4f2f82178b0b81/raw/7b7d8b7d7a2eeb7f1ed20b0bee4d027f6d1d105a/knowledge_base_data.json');
+    // Fetch the JSON file from the root directory
+    const response = await fetch('/knowledge_base_data.json');
     const data = await response.json();
     displayData(data.DevOpsTools);
   } catch (error) {
@@ -43,9 +44,9 @@ function displayData(tools) {
 }
 
 // Function to display the markdown content in the modal window
-function showMarkdownWindow(title, code) {
+function showMarkdownWindow(title, content) {
   const markdownContent = document.getElementById('markdownContent');
-  const markdown = `# ${title}\n\n\`\`\`javascript\n${code}\n\`\`\``;
+  const markdown = `## ${title}\n\n${content}`;
   const renderedMarkdown = marked(markdown);
   markdownContent.innerHTML = renderedMarkdown; // Set the markdown content
 
