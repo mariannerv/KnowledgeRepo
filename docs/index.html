@@ -6,6 +6,8 @@
     <title>Knowledge Repository</title>
     <!-- Materialize CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="styles.css">
@@ -17,7 +19,9 @@
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">Knowledge Repo</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#" class="dropdown-trigger" data-target="userDropdown">Profile</a></li>
+                <li><a href="#" class="dropdown-trigger" data-target="userDropdown">
+                    <i class="fas fa-user-circle"></i> <!-- FontAwesome Profile Icon -->
+                </a></li>
             </ul>
         </div>
     </nav>
@@ -37,7 +41,7 @@
             </div>
             <div class="col s2">
                 <a class="waves-effect waves-light btn modal-trigger" href="#editorModal">
-                    <i class="material-icons left">add</i>Add
+                    <i class="fas fa-plus-circle"></i> <!-- FontAwesome Add Icon -->
                 </a>
             </div>
         </div>
