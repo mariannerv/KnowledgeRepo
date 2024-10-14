@@ -47,6 +47,14 @@ nav {
     box-shadow: none;
 }
 
+.btn-floating {
+    background-color: #26a69a;
+}
+
+.btn-floating i {
+    font-size: 24px;
+}
+
 /* Directory Tree and List Styling */
 #directoryTree {
     margin-top: 20px;
