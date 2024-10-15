@@ -78,14 +78,25 @@ function showMarkdownWindow(title, content) {
   });
 }
 
-// Close rich text editor
-document.getElementById('editorModal').querySelector('.modal-close').addEventListener('click', function () {
-  const editorModal = document.getElementById('editorModal');
-  editorModal.style.display = 'none';
-});
+// Wait until DOM content is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("DOM fully loaded and parsed");
 
-// Load data on page load and log the loading process
-window.onload = function () {
-  console.log("Page loaded, starting data fetch...");
+  // Fetch and load data after DOM is ready
   loadData();
-};
+
+  // Attach event listeners after DOM is ready
+  document.getElementById('editorModal').querySelector('.modal-close').addEventListener('click', function () {
+    const editorModal = document.getElementById('editorModal');
+    editorModal.style.display = 'none';
+  });
+
+  document.querySelectorAll('.modal-trigger').forEach(function (modalTrigger) {
+    modalTrigger.addEventListener('click', function () {
+      const targetModal = document.querySelector(modalTrigger.getAttribute('href'));
+      if (targetModal) {
+        M.Modal.init(targetModal).open();
+      }
+    });
+  });
+});
