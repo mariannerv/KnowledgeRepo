@@ -1,102 +1,132 @@
-// Function to fetch JSON data from the root directory with logging
-async function loadData() {
-  console.log("Starting to load data...");
+document.addEventListener('DOMContentLoaded', () => {
+    // Gist details
+    const gistId = '8383cbd32b25f6c90f4f2f82178b0b81';
+    const filename = 'knowledge_base_data.json';
 
-  try {
-    // Fetch the JSON file from the root directory
-    const response = await fetch('/knowledge_base_data.json');
-    
-    // Log the response status to check if the file is fetched successfully
-    console.log("Fetch response status:", response.status);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+    // Function to handle the gist content
+    function DoSomethingWith(content) {
+        try {
+            const parsedContent = JSON.parse(content); // Parse the content to JSON
+            const devOpsTools = parsedContent.DevOpsTools; // Extract DevOpsTools array
+            displayKnowledgeBase(devOpsTools); // Display the knowledge base
+        } catch (e) {
+            console.error('Error parsing JSON content:', e);
+        }
     }
 
-    // Parse the response as JSON and log the response
-    const data = await response.json();
-    console.log("Data fetched successfully:", data);
+    // Fetch the Gist using JSONP
+    function fetchGist(gistId, filename) {
+        const script = document.createElement('script');
+        script.src = `https://api.github.com/gists/${gistId}?callback=handleGistData`;
+        document.body.appendChild(script);
+    }
 
-    // Display the data on the page
-    displayData(data.DevOpsTools);
-  } catch (error) {
-    // Log any errors during fetching or parsing
-    console.error("Error fetching data:", error);
-  }
-}
+    // Handle the JSONP response
+    window.handleGistData = function (gistdata) {
+        try {
+            const content = gistdata.data.files[filename].content; // Extract file content
+            DoSomethingWith(content); // Process the content
+        } catch (e) {
+            console.error('Error handling the Gist data:', e);
+        }
+    };
 
-// Function to display the data on the page
-function displayData(tools) {
-  console.log("Displaying data on the page...");
+    // Load knowledge base data from Gist
+    fetchGist(gistId, filename);
 
-  const directoryTree = document.getElementById('directoryTree');
-  directoryTree.innerHTML = ''; // Clear existing content
+    // Recursive function to generate the directory structure
+    function displayKnowledgeBase(data) {
+        const baseContainer = document.getElementById('knowledge-base');
+        const ul = document.createElement('ul');
+        baseContainer.appendChild(ul);
 
-  tools.forEach(tool => {
-    const toolDiv = document.createElement('div');
-    toolDiv.classList.add('collection-item');
-    toolDiv.innerHTML = `<strong>${tool.name}</strong>`;
+        data.forEach(category => {
+            const categoryLi = createExpandableItem(category.name, 'category', category.description);
+            ul.appendChild(categoryLi);
 
-    const exampleList = document.createElement('ul');
-    exampleList.classList.add('collection');
+            const examplesUl = document.createElement('ul');
+            examplesUl.classList.add('collapsible');
 
-    tool.examples.forEach(example => {
-      const exampleDiv = document.createElement('li');
-      exampleDiv.classList.add('collection-item');
-      exampleDiv.innerHTML = `
-        <a href="#codeWindow" class="modal-trigger">${example.title}</a>
-      `;
+            category.examples.forEach(example => {
+                const exampleLi = createExpandableItem(example.title, 'example', example.code);
+                examplesUl.appendChild(exampleLi);
+            });
 
-      // Log the example title being added
-      console.log("Adding example to UI:", example.title);
+            categoryLi.appendChild(examplesUl);
+            categoryLi.querySelector('.expander').addEventListener('click', () => {
+                toggleVisibility(examplesUl);
+                toggleDescription(categoryLi, category.description); // Show/hide description
+            });
+        });
+    }
 
-      // Event listener to show code in the code window
-      exampleDiv.querySelector('a').addEventListener('click', () => {
-        showMarkdownWindow(example.title, example.code);
-      });
+    // Create an expandable list item
+    function createExpandableItem(name, type, content = null) {
+        const li = document.createElement('li');
+        const div = document.createElement('div');
+        div.classList.add('expander');
 
-      exampleList.appendChild(exampleDiv);
-    });
+        const icon = document.createElement('i');
+        icon.classList.add(type === 'category' ? 'fas' : 'far', 'fa-folder');
+        div.appendChild(icon);
 
-    directoryTree.appendChild(toolDiv);
-    directoryTree.appendChild(exampleList);
-  });
-}
+        const span = document.createElement('span');
+        span.textContent = name;
+        div.appendChild(span);
 
-// Function to display the markdown content in the modal window
-function showMarkdownWindow(title, content) {
-  console.log("Showing content for:", title);
+        li.appendChild(div);
 
-  const markdownContent = document.getElementById('markdownContent');
-  const markdown = `## ${title}\n\n${content}`;
-  const renderedMarkdown = marked(markdown);
-  markdownContent.innerHTML = renderedMarkdown; // Set the markdown content
+        if (type === 'category') {
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.classList.add('description');
+            descriptionDiv.style.display = 'none';
+            descriptionDiv.textContent = content;
+            li.appendChild(descriptionDiv);
+        } else if (type === 'example') {
+            div.addEventListener('click', () => {
+                showModal(name, content); // Open modal with content when example is clicked
+            });
+        }
 
-  // Re-run syntax highlighting after rendering the markdown
-  document.querySelectorAll('pre code').forEach((block) => {
-    hljs.highlightElement(block);
-  });
-}
+        return li;
+    }
 
-// Wait until DOM content is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-  console.log("DOM fully loaded and parsed");
+    // Toggle visibility of collapsible elements
+    function toggleVisibility(element) {
+        element.classList.toggle('visible');
+    }
 
-  // Fetch and load data after DOM is ready
-  loadData();
+    // Toggle visibility of the description
+    function toggleDescription(li, description) {
+        const descriptionDiv = li.querySelector('.description');
+        if (descriptionDiv) {
+            descriptionDiv.style.display = descriptionDiv.style.display === 'none' ? 'block' : 'none';
+        }
+    }
 
-  // Attach event listeners after DOM is ready
-  document.getElementById('editorModal').querySelector('.modal-close').addEventListener('click', function () {
-    const editorModal = document.getElementById('editorModal');
-    editorModal.style.display = 'none';
-  });
+    // Show modal for example content
+    function showModal(title, code) {
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+        
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('modal-content');
 
-  document.querySelectorAll('.modal-trigger').forEach(function (modalTrigger) {
-    modalTrigger.addEventListener('click', function () {
-      const targetModal = document.querySelector(modalTrigger.getAttribute('href'));
-      if (targetModal) {
-        M.Modal.init(targetModal).open();
-      }
-    });
-  });
+        const closeButton = document.createElement('span');
+        closeButton.classList.add('close-button');
+        closeButton.innerHTML = '&times;';
+        closeButton.onclick = () => modal.remove();
+
+        const modalTitle = document.createElement('h2');
+        modalTitle.textContent = title;
+
+        const pre = document.createElement('pre');
+        pre.textContent = code;
+
+        modalContent.appendChild(closeButton);
+        modalContent.appendChild(modalTitle);
+        modalContent.appendChild(pre);
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+    }
 });
