@@ -3,68 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Repository</title>
-    <!-- Materialize CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-    <!-- FontAwesome for icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Prism JS for code highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <title>Knowledge Base Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Knowledge Repo</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#" class="dropdown-trigger" data-target="userDropdown">
-                    <i class="fas fa-user-circle"></i> <!-- FontAwesome Profile Icon -->
-                </a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Dropdown Structure -->
-    <ul id="userDropdown" class="dropdown-content">
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Logout</a></li>
-    </ul>
-
-    <!-- Search and Add Section -->
-    <div class="container">
-        <div class="row">
-            <div class="input-field col s10">
-                <input id="searchInput" type="text" placeholder="Search">
-                <label for="searchInput">Search</label>
-            </div>
-            <div class="col s2">
-                <a class="waves-effect waves-light btn modal-trigger" href="#editorModal">
-                    <i class="fas fa-plus-circle"></i> <!-- FontAwesome Add Icon -->
-                </a>
+    <header>
+        <div class="header-content">
+            <h1>Knowledge Base Directory</h1>
+            <div class="user-dropdown">
+                <div class="user-icon">👤</div>
+                <div class="dropdown-content">
+                    <a href="#">Logout</a>
+                </div>
             </div>
         </div>
+    </header>
 
-        <!-- Directory Tree -->
-        <div id="directoryTree" class="section"></div>
-    </div>
-
-    <!-- Code Window Modal -->
-    <div id="codeWindow" class="modal">
-        <div class="modal-content">
-            <h4>Code Snippet</h4>
-            <div id="markdownContent" class="markdown-body"></div>
+    <main>
+        <div class="container">
+            <!-- Search bar section -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search...">
+                <button class="search-btn">Search</button>
+            </div>
+            <!-- Knowledge base will be loaded here -->
+            <div id="knowledge-base"></div>
         </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
-        </div>
-    </div>
+    </main>
 
-    <!-- Materialize JS and other libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/3.0.4/marked.min.js"></script> <!-- Marked.js for Markdown rendering -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script> <!-- Highlight.js for syntax highlighting -->
+    <footer>
+        <p>© 2024 My Minimal Website</p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
