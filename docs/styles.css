@@ -176,9 +176,17 @@ li {
     color: #CB6040;
 }
 
+/* Code block styling */
 pre {
     background-color: #F2E5BF;
     padding: 10px;
     border-left: 3px solid #257180;
     white-space: pre-wrap;
+}
+
+code {
+    background-color: #F2E5BF;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
 }

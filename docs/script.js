@@ -120,8 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalTitle = document.createElement('h2');
         modalTitle.textContent = title;
 
-        const pre = document.createElement('pre');
-        pre.textContent = code;
+        const pre = document.createElement('div');
+        pre.innerHTML = marked(code); // Use marked.js to parse and render markdown
 
         modalContent.appendChild(closeButton);
         modalContent.appendChild(modalTitle);
