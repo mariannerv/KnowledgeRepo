@@ -1,4 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize SimpleMDE editor
+    let simplemde;
+
+    // Toggle Editor Visibility
+    const addButton = document.getElementById('add-button');
+    const editorContainer = document.getElementById('editor-container');
+
+    addButton.addEventListener('click', () => {
+        // Lazy initialize the editor if it's not already initialized
+        if (!simplemde) {
+            simplemde = new SimpleMDE({ element: document.getElementById("markdown-editor") });
+        }
+
+        // Toggle the editor's visibility
+        if (editorContainer.style.display === 'none') {
+            editorContainer.style.display = 'block';
+        } else {
+            editorContainer.style.display = 'none';
+        }
+    });
+
+    // Preview Markdown content
+    const previewButton = document.getElementById('preview-button');
+    previewButton.addEventListener('click', () => {
+        const markdown = simplemde.value();
+        const previewWindow = window.open("", "Markdown Preview", "width=800,height=600");
+        previewWindow.document.write("<html><head><title>Markdown Preview</title></head><body>");
+        previewWindow.document.write(marked(markdown));
+        previewWindow.document.write("</body></html>");
+    });
+
+    // Save Button functionality
+    const saveButton = document.getElementById('save-button');
+    saveButton.addEventListener('click', () => {
+        const markdownContent = simplemde.value();
+        // Here, you would normally send the data to your backend or store it
+        console.log("Saved Markdown Content: ", markdownContent);
+        alert("Content saved!");
+    });
+
     // Gist details
     const gistId = '8383cbd32b25f6c90f4f2f82178b0b81';
     const filename = 'knowledge_base_data.json';
@@ -129,4 +169,19 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
     }
+
+    // Implement Search Functionality
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', () => {
+        const filter = searchInput.value.toLowerCase();
+        const items = document.querySelectorAll('li');
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(filter)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
 });
