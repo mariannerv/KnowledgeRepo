@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <!-- Marked.js for Markdown rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/3.0.4/marked.min.js"></script>
-    
 </head>
 <body>
     <header>
@@ -27,22 +26,18 @@
 
     <main>
         <div class="container">
-            <!-- Add a new section for the Add Button + Search -->
             <div class="search-container">
-                <!-- Add button -->
                 <button id="add-button" class="add-button">➕ Add</button>
                 <input type="text" class="search-input" placeholder="Search...">
                 <button class="search-btn">Search</button>
             </div>
 
-            <!-- Markdown Editor container (hidden by default) -->
             <div id="editor-container" style="display:none;">
                 <textarea id="markdown-editor"></textarea>
                 <button id="preview-button" class="editor-btn">Preview</button>
                 <button id="save-button" class="editor-btn">Save</button>
             </div>
 
-            <!-- Knowledge base will be loaded here -->
             <div id="knowledge-base"></div>
         </div>
     </main>

@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize SimpleMDE editor
     let simplemde;
 
-    // Toggle Editor Visibility
     const addButton = document.getElementById('add-button');
     const editorContainer = document.getElementById('editor-container');
 
@@ -20,12 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Content saved!");
     });
 
-    // Fetch knowledge base data from API
+    // Fetch knowledge base data from API using POST request
     function loadKnowledgeBase() {
-        fetch('https://knowledge.abhinavkm.com/load_knowledge_data', {method: 'POST'})
-            .then(response => response.json())
-            .then(data => displayKnowledgeBase(data.DevOpsTools)) // Assuming DevOpsTools is the key
-            .catch(error => console.error('Error loading knowledge base:', error));
+        fetch('https://knowledge.abhinavkm.com/load_knowledge_data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => displayKnowledgeBase(data.DevOpsTools)) // Adjust according to response structure
+        .catch(error => console.error('Error loading knowledge base:', error));
     }
 
     // Generate the knowledge base structure
@@ -49,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             categoryLi.appendChild(examplesUl);
             categoryLi.querySelector('.expander').addEventListener('click', () => {
                 toggleVisibility(examplesUl);
-                toggleDescription(categoryLi, category.description); // Show/hide description
+                toggleDescription(categoryLi, category.description); 
             });
         });
     }
@@ -98,25 +102,47 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const modalContent = document.createElement('div');
         modalContent.classList.add('modal-content');
-
+    
         const closeButton = document.createElement('span');
         closeButton.classList.add('close-button');
         closeButton.innerHTML = '&times;';
         closeButton.onclick = () => modal.remove();
-
-        const modalTitle = document.createElement('h2');
-        modalTitle.textContent = title;
-
-        const pre = document.createElement('div');
-        pre.innerHTML = marked(code);
-
+    
+        // We'll remove the title here since you want to ignore it
+        //const modalTitle = document.createElement('h2');
+        //modalTitle.textContent = title;
+    
+        const pre = document.createElement('pre');
+        pre.innerHTML = marked(code); // Render the code from markdown
+    
+        // Create the "Copy" button
+        const copyButton = document.createElement('button');
+        copyButton.textContent = 'Copy Code';
+        copyButton.classList.add('copy-button');
+        copyButton.onclick = () => {
+            copyToClipboard(pre.innerText);
+            alert('Code copied to clipboard!');
+        };
+    
+        // Append all the elements
         modalContent.appendChild(closeButton);
-        modalContent.appendChild(modalTitle);
+        //modalContent.appendChild(modalTitle); // Skip the title
+        modalContent.appendChild(copyButton);
         modalContent.appendChild(pre);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
     }
 
+    // Function to copy text to clipboard
+    function copyToClipboard(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    }   
+    
     // Load the knowledge base data when the page loads
     loadKnowledgeBase();
 });
