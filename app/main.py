@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.routers import data_manager
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 
 VERSION = "0.1.0"
@@ -10,6 +11,8 @@ DESCRIPTION = "A FastAPI server to for my knowledge repository"
 app = FastAPI(
     version=VERSION, description=DESCRIPTION
 )
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.add_middleware(
     CORSMiddleware,
