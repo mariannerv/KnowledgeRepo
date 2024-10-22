@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addButton = document.getElementById('add-button');
     const editorContainer = document.getElementById('editor-container');
+    const titleInput = document.getElementById('title-input');
 
     addButton.addEventListener('click', () => {
         if (!simplemde) {
@@ -13,9 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const saveButton = document.getElementById('save-button');
     saveButton.addEventListener('click', () => {
+        const title = titleInput.value;
         const markdownContent = simplemde.value();
-        console.log("Saved Markdown Content: ", markdownContent);
-        alert("Content saved!");
+        if (title && markdownContent) {
+            console.log("Saved Markdown Content: ", { title, code: markdownContent });
+            // Replace alert with proper UI response (could be a toast, etc.)
+            titleInput.value = ''; // Clear the input after saving
+            simplemde.value(''); // Clear the editor after saving
+            editorContainer.style.display = 'none';
+        }
     });
 
     // Fetch knowledge base data from API using POST request
@@ -102,32 +109,27 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const modalContent = document.createElement('div');
         modalContent.classList.add('modal-content');
-    
+
         const closeButton = document.createElement('span');
         closeButton.classList.add('close-button');
         closeButton.innerHTML = '&times;';
         closeButton.onclick = () => modal.remove();
-    
-        // We'll remove the title here since you want to ignore it
-        //const modalTitle = document.createElement('h2');
-        //modalTitle.textContent = title;
-    
+
         const pre = document.createElement('pre');
         pre.innerHTML = marked(code); // Render the code from markdown
-    
-        // Create the "Copy" button
-        const copyButton = document.createElement('button');
-        copyButton.textContent = 'Copy Code';
-        copyButton.classList.add('copy-button');
-        copyButton.onclick = () => {
+
+        // Create the "Copy" button as an icon
+        const copyIcon = document.createElement('span');
+        copyIcon.innerHTML = '📋';
+        copyIcon.classList.add('copy-icon');
+        copyIcon.onclick = () => {
             copyToClipboard(pre.innerText);
-            alert('Code copied to clipboard!');
+            // Optionally, show a non-alert feedback
         };
-    
+
         // Append all the elements
         modalContent.appendChild(closeButton);
-        //modalContent.appendChild(modalTitle); // Skip the title
-        modalContent.appendChild(copyButton);
+        modalContent.appendChild(copyIcon);
         modalContent.appendChild(pre);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
@@ -141,8 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-    }   
-    
+    }
+
     // Load the knowledge base data when the page loads
     loadKnowledgeBase();
 });
