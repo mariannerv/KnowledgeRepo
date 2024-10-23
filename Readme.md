@@ -1,19 +1,21 @@
 # Knowledge Repository
+![Python]({https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue})
+![Docker]({https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white})
 
-Welcome to **Knowledge Repository**, a platform to help you manage and explore knowledge efficiently.
+**Knowledge Repository** is a platform to organize and share useful information.
 
-## Features
+## Planned Features
 
-- **Organized Knowledge Base**: Store and navigate different domains.
-- **Search Functionality**: Find information quickly.
-- **Docker Support**: Easy deployment.
+- **Knowledge Base**: Keep your knowledge in one place
+- **Search**: Find information quickly.
+- **Docker Support**: Deploy with docker
 
 ## Getting Started
 
 ### Prerequisites
 
-- **Docker** (for containerized deployment)
-- **Python 3.9+** (for running locally)
+- **Python 3.9+**
+- **Docker**
 
 ### Installation
 
